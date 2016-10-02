@@ -10,17 +10,17 @@ import urllib2
 def main():
 	print "This program uses the shadow file in linux to break a password for a specific user."
 	parse = argparse.ArgumentParser(description='A simple brute force /etc/shadow .')
-	parse.add_argument('-f', action='store', dest='path', help='Path to shadow file, example: \'/etc/shadow\'')
+	parse.add_argument('-f', action='store', dest='path', help='Path to shadow file \'/etc/shadow\'')
 	argus=parse.parse_args()
 	if argus.path == None:
-		parse.print_help()
+		print "invalid password"
 		exit
 	else:
 		user=("What is the username for which you want to find?")
 		passFile = open(argus.path,'r')
-         for line in passFile.readlines():
+        	for line in passFile.readlines():
 			line = line.replace("\n","").split(":")
-            if  not line[1] in [ 'x', '*','!' ]:
+            		if  not line[1] in [ 'x', '*','!' ]:
 				if line[0] = user:
 					cryptPass = line[1]
 					testPass(cryptPass,user)
