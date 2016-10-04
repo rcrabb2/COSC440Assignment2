@@ -10,7 +10,7 @@ import urllib2
 def main():
 	found = False	
 	print "This program uses the shadow file in linux to break a password for a specific user."
-	parse = argparse.ArgumentParser(description='A simple brute force /etc/shadow .')
+	parse = argparse.ArgumentParser(description='A simple dictionary attack /etc/shadow .')
 	parse.add_argument('-f', action='store', dest='path', help='Path to shadow file \'/etc/shadow\'')
 	argus=parse.parse_args()
 	if argus.path == None:
