@@ -8,6 +8,7 @@ import hashlib
 import urllib2
  
 def main():
+	found = False	
 	print "This program uses the shadow file in linux to break a password for a specific user."
 	parse = argparse.ArgumentParser(description='A simple brute force /etc/shadow .')
 	parse.add_argument('-f', action='store', dest='path', help='Path to shadow file \'/etc/shadow\'')
@@ -21,11 +22,11 @@ def main():
         	for line in passFile.readlines():
 			line = line.replace("\n","").split(":")
             		if  not line[1] in [ 'x', '*','!' ]:
-				if line[0] = user:
-					cryptPass = line[1]
-					testPass(cryptPass,user)
-				else:
-					line+1
+				user = line[0]
+				cryptPass = line[1]
+				testPass(cryptPass,user)
+			if(found==None or user==None):
+				print "User or password doesn't exist/have password"
 
 def testPass(cryptPass,user):
 	
@@ -44,10 +45,8 @@ def testPass(cryptPass,user):
 			cryptWord = m.update(word,insalt)
 			if(cryptWord == cryptPass):
 				print "User "+ user + " password is " + word
-            return
-         else:
-			print "Password not found in dictionary!!"
-	else if cryptType == '1':
+				found=True
+	elif cryptType == '1':
 		print "MD5 encryption used"
 		salt = cryptPass.split("$")[2]
 		insalt = "$" + cyrptType + "$" + salt + "$"
@@ -57,10 +56,8 @@ def testPass(cryptPass,user):
 			cryptWord = m.update(word,insalt)
 			if(cryptWord == cryptPass):
 				print "User "+ user + " password is " + word
-            return
-         else:
-			print "Password not found in dictionary!!"
-	else if cryptType == '2'
+				found=True
+	elif cryptType == '2':
 		print "SHA-256"
 		salt = cryptPass.split("$")[2]
 		insalt = "$" + cyrptType + "$" + salt + "$"
@@ -70,9 +67,6 @@ def testPass(cryptPass,user):
 			cryptWord = m.update(word,insalt)
 			if(cryptWord == cryptPass):
 				print "User "+ user + " password is " + word
-            return
-         else:
-			print "Password not found in dictionary!!"
-	else:
-		print "Encryption algorithm not usable"
-	exit
+				found=True
+	if (found==False):
+		print "Password is not found in dictionary"
