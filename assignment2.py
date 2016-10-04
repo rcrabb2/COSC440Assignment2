@@ -27,6 +27,7 @@ def main():
 				testPass(cryptPass,user)
 			if(found==None or user==None):
 				print "User or password doesn't exist/have password"
+		exit
 
 def testPass(cryptPass,user):
 	
